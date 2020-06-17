@@ -23,6 +23,8 @@ extern void ConsoleWindowUpdateProc(ConsoleWindow *, const float);
 
 extern void ConsoleWindowMouseEventProc(ConsoleWindow *, const MOUSE_EVENT_RECORD *);
 
+extern void ConsoleWindowKeyEventProc(ConsoleWindow *, const KEY_EVENT_RECORD *);
+
 int ConsoleWindowProc(ConsoleWindow *wnd);
 
 void ConsoleWindowSetSize(ConsoleWindow *wnd, short width, short height);

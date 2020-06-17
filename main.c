@@ -1,19 +1,30 @@
 #include "window.h"
 #include "renderer.h"
+#include "player.h"
 
-float x = 0.f, y = 0.f;
 
-void ConsoleWindowUpdateProc(ConsoleWindow *window, const float deltaTime)
+void ConsoleWindowUpdateProc(ConsoleWindow *wnd, const float deltaTime)
 {
-    ConsoleRendererPutPixel(window->_rend, x += .3f, y += .3f, '@', FG_CYAN);
-
-    if (x < 0.f) x += window->_size.X - 1;
-    if (y < 0.f) y += window->_size.Y - 1;
-    if (x >= window->_size.X - 1) x -= window->_size.X - 1;
-    if (y >= window->_size.Y - 1) y -= window->_size.Y - 1;
+    ConsolePlayerUpdate(wnd->_rend, deltaTime);
 }
 
-void ConsoleWindowMouseEventProc(ConsoleWindow *window, const MOUSE_EVENT_RECORD *mer)
+void ConsoleWindowKeyEventProc(ConsoleWindow *wnd, const KEY_EVENT_RECORD *ker)
+{
+    if (ker->bKeyDown)
+    {
+        if (ker->wVirtualKeyCode == VK_W) {
+            player._vy = -CONSOLE_PLAYER_DEF_VELOCITY;
+        } else if (ker->wVirtualKeyCode == VK_A) {
+            player._vx = -CONSOLE_PLAYER_DEF_VELOCITY;
+        } else if (ker->wVirtualKeyCode == VK_S) {
+            player._vy = +CONSOLE_PLAYER_DEF_VELOCITY;
+        } else if (ker->wVirtualKeyCode == VK_D) {
+            player._vx = +CONSOLE_PLAYER_DEF_VELOCITY;
+        }
+    }
+}
+
+void ConsoleWindowMouseEventProc(ConsoleWindow *wnd, const MOUSE_EVENT_RECORD *mer)
 {
 
 }
@@ -21,5 +32,6 @@ void ConsoleWindowMouseEventProc(ConsoleWindow *window, const MOUSE_EVENT_RECORD
 int main()
 {
     ConsoleWindow *window = ConsoleWindowCreate(FALSE);
+    ConsolePlayerCreate(40.f, 40.f, 5.f, 5.f);
     return ConsoleWindowProc(window);
 }

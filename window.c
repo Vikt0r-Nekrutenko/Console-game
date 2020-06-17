@@ -68,6 +68,8 @@ int ConsoleWindowProc(ConsoleWindow *wnd)
                         free(wnd);
                         return 0;
                     }
+                    ConsoleWindowKeyEventProc(wnd, &ir[i].Event.KeyEvent);
+                    break;
                 }
             }
         }
