@@ -1,33 +1,7 @@
 #include "window.h"
 #include "renderer.h"
 #include "player.h"
-
-#define CONSOLE_BULLET_DEF_VELOCITY 0.01f
-
-struct ConsoleBullet {
-    float px, py;
-    float dx, dy;
-    BOOL isActive;
-} bullet;
-
-void ConsoleBulletUpdate(ConsoleRenderer *rend, const float deltaTime)
-{
-    if (bullet.isActive == TRUE) {
-        if (bullet.dy < bullet.py) {
-            bullet.py -= CONSOLE_BULLET_DEF_VELOCITY;
-        }
-        if (bullet.dy > bullet.py) {
-            bullet.py += CONSOLE_BULLET_DEF_VELOCITY;
-        }
-        if (bullet.dx < bullet.px) {
-            bullet.px -= CONSOLE_BULLET_DEF_VELOCITY;
-        }
-        if (bullet.dx > bullet.px) {
-            bullet.px += CONSOLE_BULLET_DEF_VELOCITY;
-        }
-        ConsoleRendererPutPixel(rend, bullet.px, bullet.py, 7, FG_YELLOW);
-    }
-}
+#include "bullet.h"
 
 void ConsoleWindowUpdateProc(ConsoleWindow *wnd, const float deltaTime)
 {
@@ -53,9 +27,15 @@ void ConsoleWindowKeyEventProc(ConsoleWindow *wnd, const KEY_EVENT_RECORD *ker)
 
 void ConsoleWindowMouseEventProc(ConsoleWindow *wnd, const MOUSE_EVENT_RECORD *mer)
 {
-    if (mer->dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED) {
-        bullet.px = player._px; bullet.py = player._py;
-        bullet.dx = mer->dwMousePosition.X; bullet.dy = mer->dwMousePosition.Y;
+    if (mer->dwEventFlags == MOUSE_MOVED) {
+        player._angle = atan2f(player._py - mer->dwMousePosition.Y, player._px - mer->dwMousePosition.X) - atanf(45.f);
+    } else if (mer->dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED) {
+
+        bullet.px = player._px;
+        bullet.py = player._py;
+
+        bullet.vx = CONSOLE_BULLET_DEF_VELOCITY * sinf(player._angle);
+        bullet.vy = CONSOLE_BULLET_DEF_VELOCITY * -cosf(player._angle);
         bullet.isActive = TRUE;
     }
 }
