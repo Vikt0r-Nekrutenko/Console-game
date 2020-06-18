@@ -3,12 +3,12 @@
 #include "player.h"
 #include "weapon.h"
 
-ConsolePlayer *player;
+CG_Player *player;
 
 void ConsoleWindowUpdateProc(ConsoleWindow *wnd, const float deltaTime)
 {
-    ConsolePlayerUpdate(wnd->_rend, player, deltaTime);
-    ConsoleRendererDrawNumber(wnd->_rend, 0, 0, ((ConsolePistol *)player->_weapon)->_currentBullet, FG_WHITE);
+    CG_PlayerUpdate(wnd->_rend, player, deltaTime);
+    ConsoleRendererDrawNumber(wnd->_rend, 0, 0, ((CG_Pistol *)player->_weapon)->_currentBullet, FG_WHITE);
 }
 
 void ConsoleWindowKeyEventProc(ConsoleWindow *wnd, const KEY_EVENT_RECORD *ker)
@@ -16,13 +16,13 @@ void ConsoleWindowKeyEventProc(ConsoleWindow *wnd, const KEY_EVENT_RECORD *ker)
     if (ker->bKeyDown)
     {
         if (ker->wVirtualKeyCode == VK_W) {
-            player->_py += -CONSOLE_PLAYER_DEF_VELOCITY;
+            player->_py += -CG_PLAYER_DEF_VELOCITY;
         } else if (ker->wVirtualKeyCode == VK_A) {
-            player->_px += -CONSOLE_PLAYER_DEF_VELOCITY;
+            player->_px += -CG_PLAYER_DEF_VELOCITY;
         } else if (ker->wVirtualKeyCode == VK_S) {
-            player->_py += +CONSOLE_PLAYER_DEF_VELOCITY;
+            player->_py += +CG_PLAYER_DEF_VELOCITY;
         } else if (ker->wVirtualKeyCode == VK_D) {
-            player->_px += +CONSOLE_PLAYER_DEF_VELOCITY;
+            player->_px += +CG_PLAYER_DEF_VELOCITY;
         }
     }
 }
@@ -39,8 +39,12 @@ void ConsoleWindowMouseEventProc(ConsoleWindow *wnd, const MOUSE_EVENT_RECORD *m
 int main()
 {
     ConsoleWindow *window = ConsoleWindowCreate(FALSE);
-    player = ConsolePlayerCreate(40.f, 40.f);
-    ConsolePistol *pistol = ConsolePistolCreate();
-    ConsolePistolTakeTo(player, pistol);
-    return ConsoleWindowProc(window);
+    player = CG_PlayerCreate(40.f, 40.f);
+    CG_Pistol *pistol = CG_PistolCreate();
+    CG_PistolTakeTo(player, pistol);
+
+    int result = ConsoleWindowProc(window);
+    free(pistol);
+    free(player);
+    return result;
 }

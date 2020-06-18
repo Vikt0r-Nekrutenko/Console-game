@@ -3,14 +3,14 @@
 
 #include "renderer.h"
 
-#define CONSOLE_BULLET_DEF_VELOCITY 15.f
+#define CG_BULLET_DEF_VELOCITY 15.f
 
-typedef struct _ConsoleBullet {
+typedef struct _CG_Bullet {
     float px, py;
     float vx, vy;
     BOOL isActive;
-} ConsoleBullet;
+} CG_Bullet;
 
-void ConsoleBulletUpdate(ConsoleRenderer *rend, ConsoleBullet *bullet, const float deltaTime);
+void CG_BulletUpdate(ConsoleRenderer *rend, CG_Bullet *bullet, const float deltaTime);
 
 #endif // BULLET_H
