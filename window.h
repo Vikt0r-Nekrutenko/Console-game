@@ -19,7 +19,7 @@ typedef struct _ConsoleWindow
 
 ConsoleWindow *ConsoleWindowCreate(const WINBOOL fullscreen);
 
-extern void ConsoleWindowUpdateProc(ConsoleWindow *, const float);
+extern WINBOOL ConsoleWindowUpdateProc(ConsoleWindow *, const float);
 
 extern void ConsoleWindowMouseEventProc(ConsoleWindow *, const MOUSE_EVENT_RECORD *);
 

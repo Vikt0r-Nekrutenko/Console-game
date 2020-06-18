@@ -63,4 +63,10 @@ typedef enum _ConsoleColor {
 #define VK_Y 	0x59
 #define VK_Z 	0x5A
 
+typedef enum _CG_ObjectsView {
+    OV_PLAYER   = 0x01,
+    OV_ENEMY    = 0x02,
+    OV_BULLET   = 0x07,
+} CG_ObjectsView;
+
 #endif // COLORS_H

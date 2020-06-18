@@ -13,9 +13,10 @@ typedef struct _CG_Player {
     CG_WeaponUpdateProc    weaponUpdate;
     CG_WeaponShoot         shoot;
 
-    CG_WeaponType   _weapon;
+    CG_WeaponType       _weapon;
     float               _px, _py;
     float               _angle;
+    float               _health;
 } CG_Player;
 
 CG_Player *CG_PlayerCreate(const float px, const float py);

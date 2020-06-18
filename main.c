@@ -12,18 +12,32 @@ void ConsoleWindowSecondElapsed(ConsoleWindow *wnd)
     if (enemy._isDestroyed == TRUE) {
         enemy._isDestroyed = FALSE;
         enemy._px = enemy._py = 0;
+        enemy._health = 100.f;
     }
 }
 
-void ConsoleWindowUpdateProc(ConsoleWindow *wnd, const float deltaTime)
+WINBOOL ConsoleWindowUpdateProc(ConsoleWindow *wnd, const float deltaTime)
 {
     CG_EnemyCollisionWithBullets(&enemy, ((CG_Pistol *)player->_weapon)->_clip);
+    CG_EnemyCollisionWithTarget(&enemy, player);
 
     CG_PlayerUpdate(wnd->_rend, player, deltaTime);
     CG_EnemyUpdate(wnd->_rend, &enemy, player, deltaTime);
 
+    if (player->_health < 0.f) {
+        ConsoleRendererClear(wnd->_rend);
+        ConsoleRendererDrawText(wnd->_rend, (wnd->_size.X >> 1) - 5, wnd->_size.Y >> 1, "GAME OVER!", FG_WHITE);
+        ConsoleRendererPresent(wnd, wnd->_rend);
+        return FALSE;
+    }
+
+    // draw the HUD
     ConsoleRendererDrawText(wnd->_rend, 0, 0, "Ammo: ", FG_WHITE);
     ConsoleRendererDrawNumber(wnd->_rend, 6, 0, (((CG_Pistol *)player->_weapon)->_currentBullet - 30) * -1, FG_WHITE);
+    ConsoleRendererDrawText(wnd->_rend, 0, 1, "Health: ", FG_WHITE);
+    ConsoleRendererDrawNumber(wnd->_rend, 8, 1, player->_health, FG_WHITE);
+
+    return TRUE;
 }
 
 void ConsoleWindowKeyEventProc(ConsoleWindow *wnd, const KEY_EVENT_RECORD *ker)

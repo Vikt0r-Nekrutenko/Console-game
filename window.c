@@ -1,7 +1,7 @@
 #include "window.h"
 #include "renderer.h"
 
-ConsoleWindow *ConsoleWindowCreate(const BOOL fullscreen)
+ConsoleWindow *ConsoleWindowCreate(const WINBOOL fullscreen)
 {
     ConsoleWindow *wnd = (ConsoleWindow *)malloc(sizeof(ConsoleWindow));
     wnd->_wnd = GetConsoleWindow();
@@ -48,7 +48,9 @@ int ConsoleWindowProc(ConsoleWindow *wnd)
         time_t begin = clock();
 
         ConsoleRendererClear(wnd->_rend);
-        ConsoleWindowUpdateProc(wnd, dt);
+        if (ConsoleWindowUpdateProc(wnd, dt) == FALSE) {
+            return 0;
+        }
         ConsoleRendererPresent(wnd, wnd->_rend);
 
         GetNumberOfConsoleInputEvents(wnd->_input, &n);

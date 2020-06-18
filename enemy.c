@@ -10,7 +10,7 @@ void CG_EnemyUpdate(ConsoleRenderer *rend, CG_Enemy *enemy, CG_Player *target, c
         if (enemy->_px > target->_px) enemy->_px -= CG_ENEMY_DEF_VELOCITY * deltaTime;
         if (enemy->_py > target->_py) enemy->_py -= CG_ENEMY_DEF_VELOCITY * deltaTime;
 
-        ConsoleRendererPutPixel(rend, enemy->_px, enemy->_py, 2, FG_RED);
+        ConsoleRendererPutPixel(rend, enemy->_px, enemy->_py, OV_ENEMY, FG_RED);
     }
 }
 
@@ -20,8 +20,21 @@ void CG_EnemyCollisionWithBullets(CG_Enemy *enemy, CG_Bullet *bullets)
         if (bullets[i]._isActive == TRUE) {
             float distance = sqrtf(powf(bullets[i]._px - enemy->_px, 2.f) + powf(bullets[i]._py - enemy->_py, 2.f));
             if (distance < 1.5f) {
-                enemy->_isDestroyed = TRUE;
+                enemy->_health -= CG_BULLET_DAMAGE;
+                bullets[i]._isActive = FALSE;
+
+                if (enemy->_health < 0.f) {
+                    enemy->_isDestroyed = TRUE;
+                }
             }
         }
+    }
+}
+
+void CG_EnemyCollisionWithTarget(CG_Enemy *enemy, CG_Player *target)
+{
+    float distance = sqrtf(powf(target->_px - enemy->_px, 2.f) + powf(target->_py - enemy->_py, 2.f));
+    if (distance < 1.5f) {
+        target->_health -= CG_ENEMY_DAMAGE;
     }
 }

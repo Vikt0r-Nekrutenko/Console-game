@@ -6,6 +6,10 @@ void CG_BulletUpdate(ConsoleRenderer *rend, CG_Bullet *bullet, const float delta
         bullet->_px += bullet->_vx * deltaTime;
         bullet->_py += bullet->_vy * deltaTime;
 
-        ConsoleRendererPutPixel(rend, bullet->_px, bullet->_py, 7, FG_YELLOW);
+        if (bullet->_px < 0.f || bullet->_px >= rend->_size.X || bullet->_py < 0.f || bullet->_py >= rend->_size.Y) {
+            bullet->_isActive = FALSE;
+        }
+
+        ConsoleRendererPutPixel(rend, bullet->_px, bullet->_py, OV_BULLET, FG_YELLOW);
     }
 }

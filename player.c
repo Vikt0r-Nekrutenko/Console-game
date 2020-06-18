@@ -10,7 +10,7 @@ CG_Player *CG_PlayerCreate(const float px, const float py)
     player->_px     = px;
     player->_py     = py;
     player->_angle  = 0.f;
-
+    player->_health = 100.f;
     return player;
 }
 
@@ -26,5 +26,5 @@ void CG_PlayerUpdate(ConsoleRenderer *rend, CG_Player *player, const float delta
 {
     player->weaponUpdate(rend, player->_weapon, deltaTime);
     CG_EntityWrapping(rend, player);
-    ConsoleRendererPutPixel(rend, player->_px, player->_py, 1, FG_GREEN);
+    ConsoleRendererPutPixel(rend, player->_px, player->_py, OV_PLAYER, FG_GREEN);
 }
