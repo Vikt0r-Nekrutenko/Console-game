@@ -4,7 +4,7 @@
 #include "player.h"
 #include "ammo.h"
 
-#define CG_ENEMY_DEF_VELOCITY 3.f
+#define CG_ENEMY_DEF_VELOCITY 2.5f
 #define CG_ENEMY_DAMAGE 0.01f;
 
 typedef struct _CG_Enemy {

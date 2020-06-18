@@ -9,6 +9,7 @@ SOURCES += \
         main.c \
         player.c \
         renderer.c \
+        wave.c \
         weapon.c \
         window.c
 
@@ -18,5 +19,6 @@ HEADERS += \
     player.h \
     renderer.h \
     utils.h \
+    wave.h \
     weapon.h \
     window.h
