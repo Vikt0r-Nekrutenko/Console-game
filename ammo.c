@@ -1,7 +1,6 @@
-#include "bullet.h"
+#include "ammo.h"
 
-
-void ConsoleBulletUpdate(ConsoleRenderer *rend, struct ConsoleBullet *bullet, const float deltaTime)
+void ConsoleBulletUpdate(ConsoleRenderer *rend, ConsoleBullet *bullet, const float deltaTime)
 {
     if (bullet->isActive == TRUE) {
         bullet->px += bullet->vx * deltaTime;

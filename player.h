@@ -2,20 +2,26 @@
 #define PLAYER_H
 
 #include "renderer.h"
-#include "pistol.h"
 
 #define CONSOLE_PLAYER_DEF_VELOCITY 1.f;
 
-struct ConsolePlayer {
-    ConsolePistol _pistol;
-    float _px, _py;
-    float _angle;
-} player;
+typedef void * ConsoleWeaponType;
+typedef void(*ConsoleWeaponUpdateProc)(ConsoleRenderer *rend, ConsoleWeaponType *weapon, const float deltaTime);
+typedef void(*ConsoleWeaponShoot)(ConsoleWeaponType *weapon, const float px, const float py, const float angle);
 
-void ConsolePlayerCreate(const float px, const float py);
+typedef struct _ConsolePlayer {
+    ConsoleWeaponUpdateProc    weaponUpdate;
+    ConsoleWeaponShoot         shoot;
 
-void ConsolePlayerWrapping(ConsoleRenderer *rend);
+    ConsoleWeaponType   _weapon;
+    float               _px, _py;
+    float               _angle;
+} ConsolePlayer;
 
-void ConsolePlayerUpdate(ConsoleRenderer *rend, const float deltaTime);
+ConsolePlayer *ConsolePlayerCreate(const float px, const float py);
+
+void ConsolePlayerWrapping(ConsoleRenderer *rend, ConsolePlayer *player);
+
+void ConsolePlayerUpdate(ConsoleRenderer *rend, ConsolePlayer *player, const float deltaTime);
 
 #endif // PLAYER_H

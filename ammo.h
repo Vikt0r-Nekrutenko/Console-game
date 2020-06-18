@@ -5,12 +5,12 @@
 
 #define CONSOLE_BULLET_DEF_VELOCITY 15.f
 
-struct ConsoleBullet {
+typedef struct _ConsoleBullet {
     float px, py;
     float vx, vy;
     BOOL isActive;
-};
+} ConsoleBullet;
 
-void ConsoleBulletUpdate(ConsoleRenderer *rend, struct ConsoleBullet *bullet, const float deltaTime);
+void ConsoleBulletUpdate(ConsoleRenderer *rend, ConsoleBullet *bullet, const float deltaTime);
 
 #endif // BULLET_H

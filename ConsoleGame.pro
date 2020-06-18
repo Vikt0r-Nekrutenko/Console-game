@@ -4,17 +4,17 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        bullet.c \
+        ammo.c \
         main.c \
-        pistol.c \
         player.c \
         renderer.c \
+        weapon.c \
         window.c
 
 HEADERS += \
-    bullet.h \
-    pistol.h \
+    ammo.h \
     player.h \
     renderer.h \
     utils.h \
+    weapon.h \
     window.h

@@ -1,5 +1,4 @@
-#include "pistol.h"
-#include "player.h"
+#include "weapon.h"
 
 void ConsolePistolUpdate(ConsoleRenderer *rend, ConsolePistol *pistol, const float deltaTime)
 {
@@ -22,4 +21,18 @@ void ConsolePistolShoot(ConsolePistol *pistol, const float px, const float py, c
     } else {
         pistol->_currentBullet = 0;
     }
+}
+
+void ConsolePistolTakeTo(ConsolePlayer *player, ConsolePistol *pistol)
+{
+    player->_weapon = pistol;
+    player->weaponUpdate = (ConsoleWeaponUpdateProc)&ConsolePistolUpdate;
+    player->shoot = (ConsoleWeaponShoot)&ConsolePistolShoot;
+}
+
+ConsolePistol *ConsolePistolCreate()
+{
+    ConsolePistol *pistol = (ConsolePistol *)malloc(sizeof (ConsolePistol));
+    ZeroMemory(pistol, sizeof (ConsolePistol));
+    return pistol;
 }
