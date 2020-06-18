@@ -9,8 +9,8 @@ struct ConsoleBullet {
     float px, py;
     float vx, vy;
     BOOL isActive;
-} bullet;
+};
 
-void ConsoleBulletUpdate(ConsoleRenderer *rend, const float deltaTime);
+void ConsoleBulletUpdate(ConsoleRenderer *rend, struct ConsoleBullet *bullet, const float deltaTime);
 
 #endif // BULLET_H

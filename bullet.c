@@ -1,11 +1,12 @@
 #include "bullet.h"
 
 
-void ConsoleBulletUpdate(ConsoleRenderer *rend, const float deltaTime)
+void ConsoleBulletUpdate(ConsoleRenderer *rend, struct ConsoleBullet *bullet, const float deltaTime)
 {
-    if (bullet.isActive == TRUE) {
-        bullet.px += bullet.vx * deltaTime;
-        bullet.py += bullet.vy * deltaTime;
-        ConsoleRendererPutPixel(rend, bullet.px, bullet.py, 7, FG_YELLOW);
+    if (bullet->isActive == TRUE) {
+        bullet->px += bullet->vx * deltaTime;
+        bullet->py += bullet->vy * deltaTime;
+
+        ConsoleRendererPutPixel(rend, bullet->px, bullet->py, 7, FG_YELLOW);
     }
 }
