@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         ammo.c \
+        enemy.c \
         main.c \
         player.c \
         renderer.c \
@@ -13,6 +14,7 @@ SOURCES += \
 
 HEADERS += \
     ammo.h \
+    enemy.h \
     player.h \
     renderer.h \
     utils.h \
