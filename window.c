@@ -41,6 +41,7 @@ int ConsoleWindowProc(ConsoleWindow *wnd)
         if (elpsd_time > 1.f)
         {
             char buffer[32]; SetConsoleTitleA(itoa(frames / elpsd_time, buffer, 10));
+            ConsoleWindowSecondElapsed(wnd);
             elpsd_time = frames = 0;
         }
 

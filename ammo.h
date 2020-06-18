@@ -3,12 +3,12 @@
 
 #include "renderer.h"
 
-#define CG_BULLET_DEF_VELOCITY 15.f
+#define CG_BULLET_DEF_VELOCITY 25.f
 
 typedef struct _CG_Bullet {
-    float px, py;
-    float vx, vy;
-    BOOL isActive;
+    float _px, _py;
+    float _vx, _vy;
+    BOOL _isActive;
 } CG_Bullet;
 
 void CG_BulletUpdate(ConsoleRenderer *rend, CG_Bullet *bullet, const float deltaTime);

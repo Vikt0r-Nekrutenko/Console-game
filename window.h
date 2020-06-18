@@ -25,6 +25,8 @@ extern void ConsoleWindowMouseEventProc(ConsoleWindow *, const MOUSE_EVENT_RECOR
 
 extern void ConsoleWindowKeyEventProc(ConsoleWindow *, const KEY_EVENT_RECORD *);
 
+extern void ConsoleWindowSecondElapsed(ConsoleWindow *);
+
 int ConsoleWindowProc(ConsoleWindow *wnd);
 
 void ConsoleWindowSetSize(ConsoleWindow *wnd, short width, short height);

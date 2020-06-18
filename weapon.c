@@ -9,12 +9,12 @@ void CG_PistolUpdate(ConsoleRenderer *rend, CG_Pistol *pistol, const float delta
 
 void CG_PistolShoot(CG_Pistol *pistol, const float px, const float py, const float angle)
 {
-    pistol->_clip[pistol->_currentBullet].px = px;
-    pistol->_clip[pistol->_currentBullet].py = py;
+    pistol->_clip[pistol->_currentBullet]._px = px;
+    pistol->_clip[pistol->_currentBullet]._py = py;
 
-    pistol->_clip[pistol->_currentBullet].vx = CG_BULLET_DEF_VELOCITY * sinf(angle);
-    pistol->_clip[pistol->_currentBullet].vy = CG_BULLET_DEF_VELOCITY * -cosf(angle);
-    pistol->_clip[pistol->_currentBullet].isActive = TRUE;
+    pistol->_clip[pistol->_currentBullet]._vx = CG_BULLET_DEF_VELOCITY * sinf(angle);
+    pistol->_clip[pistol->_currentBullet]._vy = CG_BULLET_DEF_VELOCITY * -cosf(angle);
+    pistol->_clip[pistol->_currentBullet]._isActive = TRUE;
 
     if (pistol->_currentBullet < CG_PISTOL_DEF_CLIP_SIZE - 1) {
         ++pistol->_currentBullet;
