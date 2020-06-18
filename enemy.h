@@ -13,6 +13,10 @@ typedef struct _CG_Enemy {
     BOOL _isDestroyed;
 } CG_Enemy;
 
+CG_Enemy *CG_EnemyCreate(const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget);
+
+void CG_EnemyPlace(CG_Enemy *enemy, const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget);
+
 void CG_EnemyUpdate(ConsoleRenderer *rend, CG_Enemy *enemy, CG_Player *target, const float deltaTime);
 
 void CG_EnemyCollisionWithBullets(CG_Enemy *enemy, CG_Bullet *bullets);

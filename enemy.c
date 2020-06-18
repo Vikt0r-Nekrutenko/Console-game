@@ -38,3 +38,29 @@ void CG_EnemyCollisionWithTarget(CG_Enemy *enemy, CG_Player *target)
         target->_health -= CG_ENEMY_DAMAGE;
     }
 }
+
+CG_Enemy *CG_EnemyCreate(const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget)
+{
+    CG_Enemy *enemy = (CG_Enemy *)malloc(sizeof (CG_Enemy));
+    CG_EnemyPlace(enemy, borders, targetX, targetY, minDistanceToTarget);
+    enemy->_health = 100.f;
+    enemy->_isDestroyed = FALSE;
+
+    return enemy;
+}
+
+void CG_EnemyPlace(CG_Enemy *enemy, const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget)
+{
+    float randX = rand() % borders->X;
+    float randY = rand() % borders->Y;
+
+    float distance = sqrtf(powf(targetX - randX, 2.f) + powf(targetY - randY, 2.f));
+    while (distance < minDistanceToTarget) {
+        randX = rand() % borders->X;
+        randY = rand() % borders->Y;
+        distance = sqrtf(powf(targetX - randX, 2.f) + powf(targetY - randY, 2.f));
+    }
+
+    enemy->_px = randX;
+    enemy->_py = randY;
+}
