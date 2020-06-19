@@ -2,21 +2,22 @@
 #define PISTOL_H
 
 #include "ammo.h"
-#include "player.h"
 
 #define CG_PISTOL_DEF_CLIP_SIZE 30
 
-typedef struct _CG_Pistol {
-    struct _CG_Bullet _clip[CG_PISTOL_DEF_CLIP_SIZE];
-    int _currentBullet;
-} CG_Pistol;
+typedef struct _CG_Weapon {
+    CG_Bullet  *_clip;
+    uint32_t    _clipSize;
+    uint32_t    _currentBullet;
+} CG_Weapon;
 
-CG_Pistol *CG_PistolCreate();
+typedef void(*CG_WeaponShootType)(CG_Weapon *, const float, const float, const float);
+typedef void(*CG_WeaponUpdateProc)(ConsoleRenderer *rend, CG_Weapon *weapon, const float deltaTime);
 
-void CG_PistolUpdate(ConsoleRenderer *rend, CG_Pistol *pistol, const float deltaTime);
+CG_Weapon *CG_WeaponCreate(const uint32_t clipSize);
 
-void CG_PistolShoot(CG_Pistol *pistol, const float px, const float py, const float angle);
+void CG_PistolUpdate(ConsoleRenderer *rend, CG_Weapon *pistol, const float deltaTime);
 
-void CG_PistolTakeTo(CG_Player *player, CG_Pistol *pistol);
+void CG_PistolShoot(CG_Weapon *pistol, const float px, const float py, const float angle);
 
 #endif // PISTOL_H

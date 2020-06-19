@@ -28,3 +28,10 @@ void CG_PlayerUpdate(ConsoleRenderer *rend, CG_Player *player, const float delta
     CG_EntityWrapping(rend, player);
     ConsoleRendererPutPixel(rend, player->_px, player->_py, OV_PLAYER, FG_GREEN);
 }
+
+void CG_PlayerPickupWeapon(CG_Player *player, CG_Weapon *weapon, CG_WeaponShootType type, CG_WeaponUpdateProc updateProc)
+{
+    player->_weapon = weapon;
+    player->shoot = type;
+    player->weaponUpdate = updateProc;
+}

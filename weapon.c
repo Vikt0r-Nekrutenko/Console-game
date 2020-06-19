@@ -1,13 +1,22 @@
 #include "weapon.h"
 
-void CG_PistolUpdate(ConsoleRenderer *rend, CG_Pistol *pistol, const float deltaTime)
+CG_Weapon *CG_WeaponCreate(const uint32_t clipSize)
+{
+    CG_Weapon *weapon = (CG_Weapon *)malloc(sizeof (CG_Weapon));
+    weapon->_clip = (CG_Bullet *)malloc(sizeof (CG_Bullet) * clipSize);
+    weapon->_clipSize = clipSize;
+    weapon->_currentBullet = 0;
+    return weapon;
+}
+
+void CG_PistolUpdate(ConsoleRenderer *rend, CG_Weapon *pistol, const float deltaTime)
 {
     for (int i = 0; i < CG_PISTOL_DEF_CLIP_SIZE; ++i) {
         CG_BulletUpdate(rend, &pistol->_clip[i], deltaTime);
     }
 }
 
-void CG_PistolShoot(CG_Pistol *pistol, const float px, const float py, const float angle)
+void CG_PistolShoot(CG_Weapon *pistol, const float px, const float py, const float angle)
 {
     pistol->_clip[pistol->_currentBullet]._px = px;
     pistol->_clip[pistol->_currentBullet]._py = py;
@@ -21,18 +30,4 @@ void CG_PistolShoot(CG_Pistol *pistol, const float px, const float py, const flo
     } else {
         pistol->_currentBullet = 0;
     }
-}
-
-void CG_PistolTakeTo(CG_Player *player, CG_Pistol *pistol)
-{
-    player->_weapon = pistol;
-    player->weaponUpdate = (CG_WeaponUpdateProc)&CG_PistolUpdate;
-    player->shoot = (CG_WeaponShoot)&CG_PistolShoot;
-}
-
-CG_Pistol *CG_PistolCreate()
-{
-    CG_Pistol *pistol = (CG_Pistol *)malloc(sizeof (CG_Pistol));
-    ZeroMemory(pistol, sizeof (CG_Pistol));
-    return pistol;
 }

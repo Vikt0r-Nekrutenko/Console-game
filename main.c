@@ -32,7 +32,7 @@ WINBOOL ConsoleWindowUpdateProc(ConsoleWindow *wnd, const float deltaTime)
 
     // draw the HUD
     ConsoleRendererDrawText(wnd->_rend, 0, 0, "Ammo: ", FG_WHITE);
-    ConsoleRendererDrawNumber(wnd->_rend, 6, 0, (((CG_Pistol *)player->_weapon)->_currentBullet - CG_PISTOL_DEF_CLIP_SIZE) * -1, FG_WHITE);
+    ConsoleRendererDrawNumber(wnd->_rend, 6, 0, ((player->_weapon)->_currentBullet - CG_PISTOL_DEF_CLIP_SIZE) * -1, FG_WHITE);
     ConsoleRendererDrawText(wnd->_rend, 0, 1, "Health: ", FG_WHITE);
     ConsoleRendererDrawNumber(wnd->_rend, 8, 1, player->_health, FG_WHITE);
     ConsoleRendererDrawText(wnd->_rend, 0, 2, "Alived: ", FG_WHITE);
@@ -72,8 +72,8 @@ int main()
     player = CG_PlayerCreate(40.f, 40.f);
     CG_WaveCreate(&wave, &window->_rend->_size, player->_px, player->_py, 20.f);
 
-    CG_Pistol *pistol = CG_PistolCreate();
-    CG_PistolTakeTo(player, pistol);
+    CG_Weapon *pistol = CG_WeaponCreate(CG_PISTOL_DEF_CLIP_SIZE);
+    CG_PlayerPickupWeapon(player, pistol, CG_PistolShoot, CG_PistolUpdate);
 
     int result = ConsoleWindowProc(window);
     free(pistol);
