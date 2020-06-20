@@ -4,9 +4,9 @@
 #include "weapon.h"
 #include "wave.h"
 
-CG_Player *player;
-CG_Weapon *pistol, *rifle, *shotgun;
-CG_Wave wave;
+CG_Player   *player;
+CG_Weapon   *pistol, *rifle, *shotgun;
+CG_Wave     *wave;
 
 void ConsoleWindowSecondElapsed(ConsoleWindow *wnd)
 {
@@ -16,20 +16,20 @@ void ConsoleWindowSecondElapsed(ConsoleWindow *wnd)
 WINBOOL ConsoleWindowUpdateProc(ConsoleWindow *wnd, const float deltaTime)
 {
     CG_PlayerUpdate(wnd->_rend, player, deltaTime);
-//    CG_WaveUpdate(wnd->_rend, &wave, player, deltaTime);
+    CG_WaveUpdate(wnd->_rend, wave, player, deltaTime);
 
-//    uint32_t alived = 0u;
-//    if (player->_health < 0.f) {
-//        ConsoleRendererClear(wnd->_rend);
-//        ConsoleRendererDrawText(wnd->_rend, (wnd->_size.X >> 1) - 5, wnd->_size.Y >> 1, "GAME OVER!", FG_WHITE);
-//        ConsoleRendererPresent(wnd, wnd->_rend);
-//        return FALSE;
-//    } else if ((alived = CG_WaveGetAliveNumber(&wave)) == 0u) {
-//        ConsoleRendererClear(wnd->_rend);
-//        ConsoleRendererDrawText(wnd->_rend, (wnd->_size.X >> 1) - 4, wnd->_size.Y >> 1, "YOU WON!", FG_WHITE);
-//        ConsoleRendererPresent(wnd, wnd->_rend);
-//        return FALSE;
-//    }
+    uint32_t alived = 0u;
+    if (player->_health < 0.f) {
+        ConsoleRendererClear(wnd->_rend);
+        ConsoleRendererDrawText(wnd->_rend, (wnd->_size.X >> 1) - 5, wnd->_size.Y >> 1, "GAME OVER!", FG_WHITE);
+        ConsoleRendererPresent(wnd, wnd->_rend);
+        return FALSE;
+    } else if ((alived = CG_WaveGetAliveNumber(wave)) == 0u) {
+        ConsoleRendererClear(wnd->_rend);
+        ConsoleRendererDrawText(wnd->_rend, (wnd->_size.X >> 1) - 4, wnd->_size.Y >> 1, "YOU WON!", FG_WHITE);
+        ConsoleRendererPresent(wnd, wnd->_rend);
+        return FALSE;
+    }
 
     // draw the HUD
     ConsoleRendererDrawText(wnd->_rend, 0, 0, "Ammo: ", FG_WHITE);
@@ -82,14 +82,16 @@ int main()
                                                sizeof (CG_Weapon) +                         /* memory for rifle         */
                                                sizeof (CG_Bullet) * CG_RIFLE_CLIP_SIZE +    /* memory for rifle clip    */
                                                sizeof (CG_Weapon) +                         /* memory for shotgun       */
-                                               sizeof (CG_Bullet) * CG_SHOTGUN_CLIP_SIZE);  /* memory for shotgun clip  */
+                                               sizeof (CG_Bullet) * CG_SHOTGUN_CLIP_SIZE +  /* memory for shotgun clip  */
+                                               sizeof (CG_Wave)   +                         /* memory for wave          */
+                                               sizeof (CG_Enemy)  * CG_WAVE_SIZE);          /* memory for all enemy in wave */
     player = CG_PlayerCreate(alloc, 40.f, 40.f);
 
     pistol = CG_WeaponCreate(alloc, CG_PISTOL_CLIP_SIZE);
     rifle  = CG_WeaponCreate(alloc, CG_RIFLE_CLIP_SIZE);
     shotgun = CG_WeaponCreate(alloc, CG_SHOTGUN_CLIP_SIZE);
-
-//    CG_WaveCreate(&wave, &window->_rend->_size, player->_px, player->_py, 20.f);
+    wave = CG_WaveCreate(alloc, &window->_rend->_size, player->_px, player->_py, 20.f);
+//    CG_AllocatorInfo(alloc);
     int result = ConsoleWindowProc(window);
     free(alloc);
     return result;

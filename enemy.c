@@ -2,9 +2,9 @@
 #include "player.h"
 #include "weapon.h"
 
-CG_Enemy *CG_EnemyCreate(const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget)
+CG_Enemy *CG_EnemyCreate(CG_Allocator *alloc, const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget)
 {
-    CG_Enemy *enemy = (CG_Enemy *)malloc(sizeof (CG_Enemy));
+    CG_Enemy *enemy = (CG_Enemy *)CG_AllocatorGetBlock(alloc, sizeof (CG_Enemy));
     CG_EnemyPlace(enemy, borders, targetX, targetY, minDistanceToTarget);
     enemy->_health = 100.f;
     enemy->_isDestroyed = FALSE;

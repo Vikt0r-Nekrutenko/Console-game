@@ -9,6 +9,10 @@ CG_Allocator *CG_AllocatorAllocate(const uint32_t size)
     alloc->_offset = sizeof (CG_Allocator);
     alloc->_capacity = alloc->_offset + size;
     alloc->_memory = (uint8_t *)alloc;
+
+    for (uint32_t i = alloc->_offset; i < alloc->_capacity; ++i) {
+        alloc->_memory[i] = 0u;
+    }
     return alloc;
 }
 

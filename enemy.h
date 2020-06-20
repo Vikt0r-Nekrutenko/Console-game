@@ -13,7 +13,7 @@ typedef struct _CG_Enemy {
     BOOL _isDestroyed;
 } CG_Enemy;
 
-CG_Enemy *CG_EnemyCreate(const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget);
+CG_Enemy *CG_EnemyCreate(CG_Allocator *alloc, const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget);
 
 void CG_EnemyPlace(CG_Enemy *enemy, const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget);
 
