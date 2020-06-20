@@ -18,10 +18,12 @@ typedef struct _CG_Player {
 
 CG_Player *CG_PlayerCreate(CG_Allocator *alloc, const float px, const float py);
 
+void CG_PlayerTakeShot(CG_Player *player);
+
 void CG_EntityWrapping(ConsoleRenderer *rend, CG_Player *entity);
 
 void CG_PlayerUpdate(ConsoleRenderer *rend, CG_Player *player, const float deltaTime);
 
-void CG_PlayerPickupWeapon(CG_Player *player, CG_Weapon *weapon, CG_WeaponShootType type, CG_WeaponUpdateProc updateProc);
+void CG_PlayerPickupWeapon(CG_Player *player, CG_Weapon *weapon, CG_WeaponShootType type);
 
 #endif // PLAYER_H

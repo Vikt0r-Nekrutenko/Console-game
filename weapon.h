@@ -22,7 +22,7 @@ typedef struct _CG_Weapon {
 typedef void(*CG_WeaponShootType)(CG_Weapon *, const float, const float, const float);
 typedef void(*CG_WeaponUpdateProc)(ConsoleRenderer *rend, CG_Weapon *weapon, const float deltaTime);
 
-CG_Weapon *CG_WeaponCreate(const uint32_t clipSize);
+CG_Weapon *CG_WeaponCreate(CG_Allocator *alloc, const uint32_t clipSize);
 
 void CG_WeaponUpdate(ConsoleRenderer *rend, CG_Weapon *weapon, const float deltaTime);
 

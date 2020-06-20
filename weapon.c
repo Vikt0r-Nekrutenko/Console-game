@@ -1,10 +1,10 @@
 #include "weapon.h"
 #include <assert.h>
 
-CG_Weapon *CG_WeaponCreate(const uint32_t clipSize)
+CG_Weapon *CG_WeaponCreate(CG_Allocator *alloc, const uint32_t clipSize)
 {
-    CG_Weapon *weapon = (CG_Weapon *)malloc(sizeof (CG_Weapon));
-    weapon->_clip = (CG_Bullet *)malloc(sizeof (CG_Bullet) * clipSize);
+    CG_Weapon *weapon = (CG_Weapon *)CG_AllocatorGetBlock(alloc, sizeof (CG_Weapon));
+    weapon->_clip = (CG_Bullet *)CG_AllocatorGetBlock(alloc, sizeof (CG_Bullet) * clipSize);
     weapon->_clipSize = clipSize;
     weapon->_currentBullet = 0u;
     return weapon;
