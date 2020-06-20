@@ -19,7 +19,7 @@ void CG_EnemyPlace(CG_Enemy *enemy, const COORD *borders, const float targetX, c
 
 void CG_EnemyUpdate(ConsoleRenderer *rend, CG_Enemy *enemy, CG_Player *target, const float deltaTime);
 
-void CG_EnemyCollisionWithBullets(CG_Enemy *enemy, CG_Bullet *bullets);
+void CG_EnemyCollisionWithBullets(CG_Enemy *enemy, CG_Weapon *weapon);
 
 void CG_EnemyCollisionWithTarget(CG_Enemy *enemy, CG_Player *target);
 

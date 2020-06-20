@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        allocator.c \
         ammo.c \
         enemy.c \
         main.c \
@@ -14,6 +15,7 @@ SOURCES += \
         window.c
 
 HEADERS += \
+    allocator.h \
     ammo.h \
     enemy.h \
     player.h \

@@ -3,7 +3,7 @@
 
 #include "enemy.h"
 
-#define CG_WAVE_SIZE 25
+#define CG_WAVE_SIZE 5
 
 typedef struct _CG_Wave {
     CG_Enemy *_enemies[CG_WAVE_SIZE];

@@ -1,8 +1,8 @@
 #include "player.h"
 
-CG_Player *CG_PlayerCreate(const float px, const float py)
+CG_Player *CG_PlayerCreate(CG_Allocator *alloc, const float px, const float py)
 {
-    CG_Player *player = (CG_Player *)malloc(sizeof (CG_Player));
+    CG_Player *player = (CG_Player *)CG_AllocatorGetBlock(alloc, sizeof (CG_Player));
     player->_weapon        = NULL;
     player->weaponUpdate   = NULL;
     player->shoot          = NULL;
@@ -24,7 +24,9 @@ void CG_EntityWrapping(ConsoleRenderer *rend, CG_Player *player)
 
 void CG_PlayerUpdate(ConsoleRenderer *rend, CG_Player *player, const float deltaTime)
 {
-    player->weaponUpdate(rend, player->_weapon, deltaTime);
+    if (player->weaponUpdate != NULL) {
+        player->weaponUpdate(rend, player->_weapon, deltaTime);
+    }
     CG_EntityWrapping(rend, player);
     ConsoleRendererPutPixel(rend, player->_px, player->_py, OV_PLAYER, FG_GREEN);
 }

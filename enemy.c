@@ -2,6 +2,16 @@
 #include "player.h"
 #include "weapon.h"
 
+CG_Enemy *CG_EnemyCreate(const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget)
+{
+    CG_Enemy *enemy = (CG_Enemy *)malloc(sizeof (CG_Enemy));
+    CG_EnemyPlace(enemy, borders, targetX, targetY, minDistanceToTarget);
+    enemy->_health = 100.f;
+    enemy->_isDestroyed = FALSE;
+
+    return enemy;
+}
+
 void CG_EnemyUpdate(ConsoleRenderer *rend, CG_Enemy *enemy, CG_Player *target, const float deltaTime)
 {
     if (enemy->_isDestroyed == FALSE) {
@@ -14,14 +24,14 @@ void CG_EnemyUpdate(ConsoleRenderer *rend, CG_Enemy *enemy, CG_Player *target, c
     }
 }
 
-void CG_EnemyCollisionWithBullets(CG_Enemy *enemy, CG_Bullet *bullets)
+void CG_EnemyCollisionWithBullets(CG_Enemy *enemy, CG_Weapon *weapon)
 {
-    for (int i = 0; i < CG_PISTOL_DEF_CLIP_SIZE; ++i) {
-        if (bullets[i]._isActive == TRUE) {
-            float distance = sqrtf(powf(bullets[i]._px - enemy->_px, 2.f) + powf(bullets[i]._py - enemy->_py, 2.f));
+    for (uint32_t i = 0; i < weapon->_clipSize; ++i) {
+        if (weapon->_clip[i]._isActive == TRUE) {
+            float distance = sqrtf(powf(weapon->_clip[i]._px - enemy->_px, 2.f) + powf(weapon->_clip[i]._py - enemy->_py, 2.f));
             if (distance < 1.5f) {
                 enemy->_health -= CG_BULLET_DAMAGE;
-                bullets[i]._isActive = FALSE;
+                weapon->_clip[i]._isActive = FALSE;
 
                 if (enemy->_health < 0.f) {
                     enemy->_isDestroyed = TRUE;
@@ -37,16 +47,6 @@ void CG_EnemyCollisionWithTarget(CG_Enemy *enemy, CG_Player *target)
     if (distance < 1.5f) {
         target->_health -= CG_ENEMY_DAMAGE;
     }
-}
-
-CG_Enemy *CG_EnemyCreate(const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget)
-{
-    CG_Enemy *enemy = (CG_Enemy *)malloc(sizeof (CG_Enemy));
-    CG_EnemyPlace(enemy, borders, targetX, targetY, minDistanceToTarget);
-    enemy->_health = 100.f;
-    enemy->_isDestroyed = FALSE;
-
-    return enemy;
 }
 
 void CG_EnemyPlace(CG_Enemy *enemy, const COORD *borders, const float targetX, const float targetY, const float minDistanceToTarget)

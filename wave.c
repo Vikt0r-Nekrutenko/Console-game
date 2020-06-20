@@ -11,7 +11,7 @@ void CG_WaveUpdate(ConsoleRenderer *rend, CG_Wave *wave, CG_Player *target, cons
 {
     for (int i = 0; i < CG_WAVE_SIZE; ++i) {
         if (wave->_enemies[i]->_isDestroyed == FALSE) {
-            CG_EnemyCollisionWithBullets(wave->_enemies[i], target->_weapon->_clip);
+            CG_EnemyCollisionWithBullets(wave->_enemies[i], target->_weapon);
             CG_EnemyCollisionWithTarget(wave->_enemies[i], target);
 
             CG_EnemyUpdate(rend, wave->_enemies[i], target, deltaTime);

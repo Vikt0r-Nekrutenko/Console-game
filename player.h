@@ -16,7 +16,7 @@ typedef struct _CG_Player {
     float               _health;
 } CG_Player;
 
-CG_Player *CG_PlayerCreate(const float px, const float py);
+CG_Player *CG_PlayerCreate(CG_Allocator *alloc, const float px, const float py);
 
 void CG_EntityWrapping(ConsoleRenderer *rend, CG_Player *entity);
 
