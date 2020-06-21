@@ -1,7 +1,7 @@
 #include "window.h"
 #include "renderer.h"
 
-ConsoleWindow *ConsoleWindowCreate(const BOOL fullscreen)
+ConsoleWindow *ConsoleWindowCreate(const WINBOOL fullscreen)
 {
     ConsoleWindow *wnd = (ConsoleWindow *)malloc(sizeof(ConsoleWindow));
     wnd->_wnd = GetConsoleWindow();
@@ -41,13 +41,16 @@ int ConsoleWindowProc(ConsoleWindow *wnd)
         if (elpsd_time > 1.f)
         {
             char buffer[32]; SetConsoleTitleA(itoa(frames / elpsd_time, buffer, 10));
+            ConsoleWindowSecondElapsed(wnd);
             elpsd_time = frames = 0;
         }
 
         time_t begin = clock();
 
         ConsoleRendererClear(wnd->_rend);
-        ConsoleWindowUpdateProc(wnd, dt);
+        if (ConsoleWindowUpdateProc(wnd, dt) == FALSE) {
+            return 0;
+        }
         ConsoleRendererPresent(wnd, wnd->_rend);
 
         GetNumberOfConsoleInputEvents(wnd->_input, &n);
@@ -68,6 +71,8 @@ int ConsoleWindowProc(ConsoleWindow *wnd)
                         free(wnd);
                         return 0;
                     }
+                    ConsoleWindowKeyEventProc(wnd, &ir[i].Event.KeyEvent);
+                    break;
                 }
             }
         }

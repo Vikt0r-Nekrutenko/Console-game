@@ -21,8 +21,8 @@ void ConsoleRendererClear(ConsoleRenderer *rend)
 {
     for (int i = rend->_size.X * rend->_size.Y - 1; i >= 0; --i) {
         CHAR_INFO *pix = &rend->_array[i];
-        pix->Char.AsciiChar = '#';
-        pix->Attributes = FG_RED;
+        pix->Char.AsciiChar = ' ';
+        pix->Attributes = FB_BLACK;
     }
 }
 
